@@ -1,60 +1,79 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   import SecurityStatus from './Security.Status.svelte';
   import ThreatsList from './ThreatsList.svelte';
   import Settings from './Settings.svelte';
+  import type { Threat, SecurityData, ChromeResponse } from './types';
 
-  let currentUrl = '';
-  let securityData = {
+  let currentUrl: string = '';
+  let securityData: SecurityData = {
     isSecure: true,
     riskScore: 0,
     threats: [],
     trackersBlocked: 0,
     lastScan: null
   };
-  let activeTab = 'security'; // security, threats, settings
-  let isLoading = true;
+  let activeTab: 'security' | 'threats' | 'settings' = 'security';
+  let isLoading: boolean = true;
+  let extensionError: boolean = false;
 
-  onMount(async () => {
-    await loadCurrentTabData();
-    await loadSecurityAnalysis();
-
-    // Listen for updates from the background script
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-      if (message.type === 'update_tracker_count') {
-        securityData.trackersBlocked = message.count;
-      }
-    });
+  onMount(async (): Promise<void> => {
+    // Check if we're in extension context
+    if (typeof chrome !== 'undefined' && chrome.tabs) {
+      await loadCurrentTabData();
+      await loadSecurityAnalysis();
+    } else {
+      // Fallback for development/testing
+      extensionError = true;
+      currentUrl = 'example.com';
+      securityData = {
+        isSecure: true,
+        riskScore: 25,
+        threats: [
+          {
+            type: 'tracker',
+            severity: 'medium',
+            description: 'Sample tracker detected for demo purposes'
+          }
+        ],
+        trackersBlocked: 5,
+        lastScan: new Date()
+      };
+      isLoading = false;
+    }
   });
 
-  async function loadCurrentTabData() {
+  async function loadCurrentTabData(): Promise<void> {
     try {
-      // Get current active tab
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      currentUrl = tab?.url || 'Unknown';
+      if (chrome?.tabs?.query) {
+        const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+        const tab = tabs[0];
+        currentUrl = tab?.url || 'Unknown';
+      }
     } catch (error) {
       console.error('Failed to get current tab:', error);
       currentUrl = 'Error loading URL';
     }
   }
 
-  async function loadSecurityAnalysis() {
+  async function loadSecurityAnalysis(): Promise<void> {
     isLoading = true;
     try {
-      // Request analysis from background script
-      const response = await chrome.runtime.sendMessage({ 
-        type: 'get_analysis',
-        url: currentUrl 
-      });
-      
-      if (response) {
-        securityData = {
-          isSecure: response.riskScore < 30,
-          riskScore: response.riskScore || 0,
-          threats: response.threats || [],
-          trackersBlocked: response.trackersBlocked || 0,
-          lastScan: response.timestamp ? new Date(response.timestamp) : new Date()
-        };
+      if (chrome?.runtime?.sendMessage) {
+        const response: ChromeResponse = await chrome.runtime.sendMessage({ 
+          type: 'get_analysis',
+          url: currentUrl 
+        });
+        
+        if (response) {
+          securityData = {
+            isSecure: (response.riskScore || 0) < 30,
+            riskScore: response.riskScore || 0,
+            threats: response.threats || [],
+            trackersBlocked: response.trackersBlocked || 0,
+            lastScan: response.timestamp ? new Date(response.timestamp) : new Date()
+          };
+        }
       }
     } catch (error) {
       console.error('Failed to load security analysis:', error);
@@ -63,21 +82,30 @@
     }
   }
 
-  async function runQuickScan() {
+  async function runQuickScan(): Promise<void> {
     isLoading = true;
     try {
-      await chrome.runtime.sendMessage({ 
-        type: 'force_scan',
-        url: currentUrl 
-      });
-      await loadSecurityAnalysis();
+      if (chrome?.runtime?.sendMessage) {
+        await chrome.runtime.sendMessage({ 
+          type: 'force_scan',
+          url: currentUrl 
+        });
+        await loadSecurityAnalysis();
+      } else {
+        // Demo scan for development
+        setTimeout(() => {
+          securityData.riskScore = Math.floor(Math.random() * 100);
+          securityData.lastScan = new Date();
+          isLoading = false;
+        }, 1000);
+      }
     } catch (error) {
       console.error('Failed to run scan:', error);
       isLoading = false;
     }
   }
 
-  function formatUrl(url) {
+  function formatUrl(url: string): string {
     try {
       const urlObj = new URL(url);
       return urlObj.hostname;
@@ -86,20 +114,31 @@
     }
   }
 
-  function getSecurityColor(riskScore) {
+  function getSecurityColor(riskScore: number): string {
     if (riskScore < 30) return '#22c55e'; // Green
     if (riskScore < 60) return '#f59e0b'; // Yellow
     return '#ef4444'; // Red
   }
 
-  function getSecurityStatus(riskScore) {
+  function getSecurityStatus(riskScore: number): string {
     if (riskScore < 30) return 'Secure';
     if (riskScore < 60) return 'Caution';
     return 'Dangerous';
   }
+
+  function setActiveTab(tab: 'security' | 'threats' | 'settings'): void {
+    activeTab = tab;
+  }
 </script>
 
 <main class="webguardian-popup">
+  <!-- Development Warning -->
+  {#if extensionError}
+    <div class="dev-warning">
+      <p>⚠️ Development Mode - Chrome Extension APIs not available</p>
+    </div>
+  {/if}
+
   <!-- Header -->
   <header class="header">
     <div class="header-content">
@@ -128,21 +167,21 @@
         <button 
           class="tab-button" 
           class:active={activeTab === 'security'}
-          on:click={() => activeTab = 'security'}
+          on:click={() => setActiveTab('security')}
         >
           Security
         </button>
         <button 
           class="tab-button" 
           class:active={activeTab === 'threats'}
-          on:click={() => activeTab = 'threats'}
+          on:click={() => setActiveTab('threats')}
         >
           Threats ({securityData.threats.length})
         </button>
         <button 
           class="tab-button" 
           class:active={activeTab === 'settings'}
-          on:click={() => activeTab = 'settings'}
+          on:click={() => setActiveTab('settings')}
         >
           Settings
         </button>
@@ -189,6 +228,14 @@
     color: #333;
     display: flex;
     flex-direction: column;
+  }
+
+  .dev-warning {
+    background: #fbbf24;
+    color: #92400e;
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
   }
 
   .header {

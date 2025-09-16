@@ -1,8 +1,10 @@
-<script>
-  export let threats = [];
+<script lang="ts">
+  import type { Threat } from './types';
 
-  function getThreatIcon(type) {
-    const icons = {
+  export let threats: Threat[] = [];
+
+  function getThreatIcon(type: string): string {
+    const icons: Record<string, string> = {
       malicious_domain: '🚫',
       phishing: '🎣',
       tracker: '👁️',
@@ -16,8 +18,8 @@
     return icons[type] || icons.default;
   }
 
-  function getSeverityColor(severity) {
-    const colors = {
+  function getSeverityColor(severity: string): string {
+    const colors: Record<string, string> = {
       low: '#22c55e',
       medium: '#f59e0b',
       high: '#ef4444',
@@ -26,8 +28,8 @@
     return colors[severity] || colors.medium;
   }
 
-  function getSeverityBadge(severity) {
-    const badges = {
+  function getSeverityBadge(severity: string): string {
+    const badges: Record<string, string> = {
       low: 'Low Risk',
       medium: 'Medium Risk', 
       high: 'High Risk',
@@ -36,15 +38,15 @@
     return badges[severity] || 'Unknown';
   }
 
-  function formatThreatType(type) {
+  function formatThreatType(type: string): string {
     return type
       .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 
-  function getRecommendation(threat) {
-    const recommendations = {
+  function getRecommendation(threat: Threat): string {
+    const recommendations: Record<string, string> = {
       malicious_domain: "Leave this website immediately and avoid sharing personal information.",
       phishing: "Do not enter any passwords or personal details. This appears to be a phishing attempt.",
       tracker: "Your browsing activity may be monitored. Consider using privacy mode.",
@@ -55,6 +57,11 @@
       ai_detection: "Our AI system has flagged this content as potentially suspicious."
     };
     return recommendations[threat.type] || "Exercise caution when browsing this website.";
+  }
+
+  function toggleDetails(threat: Threat): void {
+    threat.showDetails = !threat.showDetails;
+    threats = threats; // Trigger reactivity
   }
 </script>
 
@@ -113,7 +120,7 @@
             <div class="threat-details">
               <button 
                 class="details-toggle"
-                on:click={() => threat.showDetails = !threat.showDetails}
+                on:click={() => toggleDetails(threat)}
               >
                 {threat.showDetails ? 'Hide' : 'Show'} Technical Details
                 <span class="toggle-icon" class:rotated={threat.showDetails}>▼</span>
@@ -132,10 +139,10 @@
 
     <div class="threats-footer">
       <div class="action-buttons">
-        <button class="report-button">
+        <button class="report-button" on:click={() => alert('Report feature coming soon!')}>
           📋 Report False Positive
         </button>
-        <button class="learn-more-button">
+        <button class="learn-more-button" on:click={() => alert('Learn more feature coming soon!')}>
           📖 Learn More About These Threats
         </button>
       </div>
@@ -425,4 +432,4 @@
   .tip-content strong {
     color: #78350f;
   }
-  </style>
+</style>

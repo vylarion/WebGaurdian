@@ -3,16 +3,34 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://svelte.dev/docs/kit/integrations
-	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 
 	kit: {
-		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
-		adapter: adapter(),
-		appDir: 'src'
+		adapter: adapter({
+			// Remove fallback for popup - not needed for Chrome extensions
+			// Chrome extensions don't use traditional routing
+			pages: 'build',
+			assets: 'build',
+			fallback: undefined,
+			precompress: false,
+			strict: true
+		}),
+		
+		// Disable service worker for Chrome extension
+		serviceWorker: {
+			register: false
+		},
+		
+		// Optimize for extension popup size constraints
+		prerender: {
+			handleHttpError: 'warn'
+		}
+	},
+
+	// Optional: Add compiler options for better extension performance
+	compilerOptions: {
+		// Disable CSS hash for more predictable styling in extension
+		cssHash: ({ hash, css }) => `svelte-${hash(css).slice(0, 6)}`
 	}
 };
 

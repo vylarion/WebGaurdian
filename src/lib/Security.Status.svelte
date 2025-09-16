@@ -1,16 +1,23 @@
-<script>
-  export let securityData;
-  export let runQuickScan;
+<script lang="ts">
+  import type { Threat, SecurityData } from './types';
+
+  export let securityData: SecurityData;
+  export let runQuickScan: () => Promise<void>;
 
   let isScanning = false;
 
-  async function handleScan() {
+  async function handleScan(): Promise<void> {
     isScanning = true;
-    await runQuickScan();
-    isScanning = false;
+    try {
+      await runQuickScan();
+    } catch (error) {
+      console.error('Scan failed:', error);
+    } finally {
+      isScanning = false;
+    }
   }
 
-  function getSecurityGrade(riskScore) {
+  function getSecurityGrade(riskScore: number): string {
     if (riskScore < 20) return 'A+';
     if (riskScore < 30) return 'A';
     if (riskScore < 40) return 'B';
@@ -19,16 +26,23 @@
     return 'F';
   }
 
-  function getGradeColor(grade) {
-    switch(grade) {
-      case 'A+':
-      case 'A': return '#22c55e';
-      case 'B': return '#84cc16';
-      case 'C': return '#f59e0b';
-      case 'D': return '#f97316';
-      case 'F': return '#ef4444';
-      default: return '#6b7280';
+  function getGradeColor(grade: string): string {
+    const colors: Record<string, string> = {
+      'A+': '#22c55e',
+      'A': '#22c55e',
+      'B': '#84cc16',
+      'C': '#f59e0b',
+      'D': '#f97316',
+      'F': '#ef4444'
+    };
+    return colors[grade] || '#6b7280';
+  }
+
+  function getHTTPSStatus(): string {
+    if (typeof window !== 'undefined') {
+      return window.location.protocol === 'https:' ? 'Yes' : 'No';
     }
+    return 'Unknown';
   }
 </script>
 
@@ -88,7 +102,7 @@
     <div class="stat-card">
       <div class="stat-icon">🔒</div>
       <div class="stat-content">
-        <div class="stat-number">{location.protocol === 'https:' ? 'Yes' : 'No'}</div>
+        <div class="stat-number">{getHTTPSStatus()}</div>
         <div class="stat-label">HTTPS Enabled</div>
       </div>
     </div>
@@ -114,7 +128,7 @@
         <div class="feature-text">
           <div class="feature-title">Phishing Protection</div>
           <div class="feature-status">
-            {securityData.threats.some(t => t.type === 'phishing') ? 'Phishing Detected' : 'Protected'}
+            {securityData.threats.some((t: Threat) => t.type === 'phishing') ? 'Phishing Detected' : 'Protected'}
           </div>
         </div>
       </div>
