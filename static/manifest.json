@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "WebGuardian",
+  "description": "A browser extension to check website safety in real-time.",
+  "version": "1.0",
+  "action": {
+    "default_title": "WebGuardian",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "activeTab",
+    "webNavigation",
+    "storage",
+    "webRequest",
+    "tabs",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.js", "*.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
