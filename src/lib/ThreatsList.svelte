@@ -425,3 +425,4 @@
   .tip-content strong {
     color: #78350f;
   }
+  </style>
