@@ -225,25 +225,30 @@
     width: 380px;
     min-height: 500px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #000000;
-    color: #e2e8f0;
+    background: #0a0a0a;
+    color: #f8fafc;
     display: flex;
     flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
   }
 
   .dev-warning {
-    background: #4f46e5;
-    color: #e2e8f0;
-    padding: 8px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: #ffffff;
+    padding: 10px;
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.025em;
   }
 
   .header {
-    background: #0f0f0f;
-    backdrop-filter: blur(10px);
-    padding: 16px;
-    border-bottom: 1px solid #333333;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .header-content {
@@ -255,48 +260,42 @@
   .logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    flex: 1;
   }
 
   .shield-icon {
-    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   }
 
-  .logo h1 {
-    margin: 0;
+  h1 {
     font-size: 18px;
     font-weight: 700;
-    background: linear-gradient(45deg, #4f46e5, #6366f1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #f8fafc;
+    letter-spacing: -0.025em;
   }
 
   .url-display {
-    flex: 1;
-    margin-left: 16px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .url-label {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 14px;
+    border-radius: 8px;
     font-size: 11px;
-    color: #94a3b8;
-    font-weight: 500;
-  }
-
-  .url-text {
-    font-size: 12px;
-    color: #e2e8f0;
-    background: #262626;
-    padding: 4px 8px;
-    border-radius: 12px;
-    max-width: 150px;
-    white-space: nowrap;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 180px;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: inline-block;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    font-weight: 500;
   }
 
   .content {
@@ -331,48 +330,53 @@
 
   .tabs {
     display: flex;
-    gap: 2px;
-    margin-bottom: 16px;
+    gap: 4px;
+    margin: 0 20px 20px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 4px;
+    border-radius: 12px;
   }
 
   .tab-button {
     flex: 1;
-    padding: 10px;
-    background: #1a1a1a;
+    padding: 12px 16px;
+    background: none;
     border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
     color: #94a3b8;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+  }
+
+  .tab-button:hover {
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
   }
 
   .tab-button.active {
-    background: #4f46e5;
-    color: white;
-  }
-
-  .tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #4f46e5;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
   }
 
   .tab-content {
     flex: 1;
-    padding: 16px;
+    padding: 20px;
     min-height: 300px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);
   }
 
   .footer {
-    background: #1a1a1a;
-    border-top: 1px solid #333333;
-    padding: 12px 16px;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
