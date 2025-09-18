@@ -171,10 +171,10 @@
   }
 
   .security-score-card {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
     border-radius: 12px;
     padding: 20px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #333333;
   }
 
   .score-container {
@@ -200,7 +200,7 @@
   .score-inner {
     width: 60px;
     height: 60px;
-    background: white;
+    background: #262626;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
@@ -217,7 +217,7 @@
 
   .score-text {
     font-size: 10px;
-    color: #6b7280;
+    color: #94a3b8;
     font-weight: 500;
   }
 
@@ -229,13 +229,13 @@
     margin: 0 0 8px 0;
     font-size: 16px;
     font-weight: 600;
-    color: #1f2937;
+    color: #e2e8f0;
   }
 
   .risk-description {
     margin: 0;
     font-size: 13px;
-    color: #6b7280;
+    color: #94a3b8;
     line-height: 1.4;
   }
 
@@ -243,22 +243,24 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+    margin-top: 8px;
   }
 
   .stat-card {
-    background: white;
-    border: 1px solid #e5e7eb;
+    background: #1a1a1a;
+    border: 1px solid #333333;
     border-radius: 8px;
     padding: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
   .stat-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
   .stat-icon {
@@ -272,21 +274,21 @@
   .stat-number {
     font-size: 16px;
     font-weight: 700;
-    color: #1f2937;
+    color: #e2e8f0;
     line-height: 1;
   }
 
   .stat-label {
     font-size: 10px;
-    color: #6b7280;
+    color: #94a3b8;
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 0.025em;
   }
 
   .security-features {
-    background: white;
-    border: 1px solid #e5e7eb;
+    background: #1e1e1e;
+    border: 1px solid #333;
     border-radius: 8px;
     padding: 16px;
   }
@@ -295,7 +297,7 @@
     margin: 0 0 12px 0;
     font-size: 14px;
     font-weight: 600;
-    color: #1f2937;
+    color: #e2e8f0;
   }
 
   .feature-list {
@@ -317,13 +319,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f3f4f6;
+    background: #262626;
     font-size: 14px;
     transition: all 0.2s;
   }
 
   .feature-icon.active {
-    background: #dcfce7;
+    background: #064e3b;
   }
 
   .feature-text {
@@ -333,14 +335,14 @@
   .feature-title {
     font-size: 13px;
     font-weight: 500;
-    color: #1f2937;
+    color: #e2e8f0;
     line-height: 1;
     margin-bottom: 2px;
   }
 
   .feature-status {
     font-size: 11px;
-    color: #6b7280;
+    color: #94a3b8;
   }
 
   .action-section {
@@ -349,7 +351,7 @@
   }
 
   .scan-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #4f46e5;
     color: white;
     border: none;
     padding: 12px 24px;

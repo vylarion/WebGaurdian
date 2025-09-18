@@ -355,9 +355,10 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-height: 400px;
+    height: 100%;
     overflow-y: auto;
-    padding-right: 4px;
+    padding: 0 8px 16px 0;
+    overscroll-behavior: contain;
   }
 
   .dev-notice {
@@ -399,18 +400,18 @@
   .section-title {
     margin: 0;
     padding: 12px 16px;
-    background: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
+    background: #1a1a1a;
+    border-bottom: 1px solid #333333;
     font-size: 14px;
     font-weight: 600;
-    color: #1f2937;
+    color: #e2e8f0;
   }
 
   .setting-group {
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
   }
 
   .setting-item {
@@ -418,6 +419,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+    padding: 8px 0;
   }
 
   .setting-info {
@@ -427,20 +429,20 @@
   .setting-title {
     font-size: 13px;
     font-weight: 500;
-    color: #1f2937;
+    color: #e2e8f0;
     margin-bottom: 2px;
   }
 
   .setting-description {
     font-size: 11px;
-    color: #6b7280;
+    color: #94a3b8;
     line-height: 1.3;
   }
 
   .toggle-button {
-    background: #f3f4f6;
-    color: #6b7280;
-    border: 1px solid #d1d5db;
+    background: #262626;
+    color: #94a3b8;
+    border: 1px solid #333333;
     padding: 6px 12px;
     border-radius: 4px;
     font-size: 11px;
@@ -451,17 +453,17 @@
   }
 
   .toggle-button.active {
-    background: #667eea;
+    background: #4f46e5;
     color: white;
-    border-color: #667eea;
+    border-color: #4f46e5;
   }
 
   .toggle-button:hover {
-    background: #e5e7eb;
+    background: #333333;
   }
 
   .toggle-button.active:hover {
-    background: #5b6fd8;
+    background: #4338ca;
   }
 
   .select-group {
@@ -471,9 +473,9 @@
   }
 
   .select-button {
-    background: #f9fafb;
-    color: #6b7280;
-    border: 1px solid #e5e7eb;
+    background: #262626;
+    color: #94a3b8;
+    border: 1px solid #333333;
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 10px;
@@ -482,17 +484,17 @@
   }
 
   .select-button.active {
-    background: #667eea;
+    background: #4f46e5;
     color: white;
-    border-color: #667eea;
+    border-color: #4f46e5;
   }
 
   .select-button:hover {
-    background: #f3f4f6;
+    background: #333333;
   }
 
   .select-button.active:hover {
-    background: #5b6fd8;
+    background: #4338ca;
   }
 
   .stats-grid {
@@ -500,6 +502,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .stat-box {
@@ -560,20 +564,27 @@
 
   /* Scrollbar styling */
   .settings-container::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   .settings-container::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 3px;
+    background: transparent;
   }
 
   .settings-container::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 3px;
+    background: #333333;
+    border: 2px solid transparent;
+    background-clip: padding-box;
   }
 
   .settings-container::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #4f46e5;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  
+  /* Ensure proper spacing between sections */
+  .settings-section:not(:last-child) {
+    margin-bottom: 8px;
   }
 </style>

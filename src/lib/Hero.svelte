@@ -147,6 +147,7 @@
         <h1>WebGuardian</h1>
       </div>
       <div class="url-display">
+        <span class="url-label">Current site:</span>
         <span class="url-text" title={currentUrl}>
           {formatUrl(currentUrl)}
         </span>
@@ -224,25 +225,25 @@
     width: 380px;
     min-height: 500px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    background: #000000;
+    color: #e2e8f0;
     display: flex;
     flex-direction: column;
   }
 
   .dev-warning {
-    background: #fbbf24;
-    color: #92400e;
+    background: #4f46e5;
+    color: #e2e8f0;
     padding: 8px;
     text-align: center;
     font-size: 12px;
   }
 
   .header {
-    background: rgba(255, 255, 255, 0.95);
+    background: #0f0f0f;
     backdrop-filter: blur(10px);
     padding: 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #333333;
   }
 
   .header-content {
@@ -265,7 +266,7 @@
     margin: 0;
     font-size: 18px;
     font-weight: 700;
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: linear-gradient(45deg, #4f46e5, #6366f1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -274,12 +275,21 @@
   .url-display {
     flex: 1;
     margin-left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .url-label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
   }
 
   .url-text {
     font-size: 12px;
-    color: #666;
-    background: rgba(0, 0, 0, 0.05);
+    color: #e2e8f0;
+    background: #262626;
     padding: 4px 8px;
     border-radius: 12px;
     max-width: 150px;
@@ -291,7 +301,7 @@
 
   .content {
     flex: 1;
-    background: white;
+    background: #0f0f0f;
     display: flex;
     flex-direction: column;
   }
@@ -308,8 +318,8 @@
   .spinner {
     width: 32px;
     height: 32px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #667eea;
+    border: 3px solid #333333;
+    border-top: 3px solid #4f46e5;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -321,31 +331,26 @@
 
   .tabs {
     display: flex;
-    border-bottom: 1px solid #e5e7eb;
-    background: #f9fafb;
+    gap: 2px;
+    margin-bottom: 16px;
   }
 
   .tab-button {
     flex: 1;
-    padding: 12px 8px;
+    padding: 10px;
+    background: #1a1a1a;
     border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 14px;
+    border-radius: 6px;
+    font-size: 13px;
     font-weight: 500;
-    color: #6b7280;
+    color: #94a3b8;
+    cursor: pointer;
     transition: all 0.2s;
-    position: relative;
-  }
-
-  .tab-button:hover {
-    background: rgba(103, 126, 234, 0.1);
-    color: #667eea;
   }
 
   .tab-button.active {
-    color: #667eea;
-    background: white;
+    background: #4f46e5;
+    color: white;
   }
 
   .tab-button.active::after {
@@ -355,7 +360,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: #667eea;
+    background: #4f46e5;
   }
 
   .tab-content {
@@ -365,13 +370,14 @@
   }
 
   .footer {
-    background: rgba(0, 0, 0, 0.02);
-    border-top: 1px solid #e5e7eb;
+    background: #1a1a1a;
+    border-top: 1px solid #333333;
     padding: 12px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 12px;
+    color: #a1a1aa;
   }
 
   .status-indicator {

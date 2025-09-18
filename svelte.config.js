@@ -13,8 +13,14 @@ const config = {
 			assets: 'build',
 			fallback: undefined,
 			precompress: false,
-			strict: true
+			strict: true,
+			// Simple fix to prevent underscore files
+			emitTypes: false
 		}),
+		
+		// Prevent files with underscore prefixes
+		appDir: 'app',
+		inlineStyleThreshold: 0,
 		
 		// Disable service worker for Chrome extension
 		serviceWorker: {
