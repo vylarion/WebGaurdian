@@ -362,38 +362,44 @@
   }
 
   .dev-notice {
-    background: #fef3c7;
-    color: #92400e;
-    padding: 8px;
-    border-radius: 4px;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 16px;
     font-size: 12px;
+    color: #94a3b8;
+    backdrop-filter: blur(10px);
   }
 
   .save-status {
-    background: #dbeafe;
-    color: #1e40af;
-    padding: 8px;
-    border-radius: 4px;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 16px;
     font-size: 12px;
-    font-weight: 500;
+    text-align: center;
+    color: #94a3b8;
+    backdrop-filter: blur(10px);
   }
 
   .save-status.success {
-    background: #dcfce7;
-    color: #166534;
+    background: rgba(22, 101, 52, 0.2);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
   }
 
   .save-status.error {
-    background: #fee2e2;
-    color: #991b1b;
+    background: rgba(153, 27, 27, 0.2);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
   }
 
   .settings-section {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     overflow: hidden;
   }
 
